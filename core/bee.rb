@@ -42,6 +42,10 @@ class Bee
     turn_left if window.button_down? Gosu::KbSpace
     turn_right
   end
+
+  def add_score
+    @score += 100
+  end
   
   def move_left
     @x -= 7.0 if @x >= 25
