@@ -1,0 +1,70 @@
+=begin
+/**
+* @author zhzhussupovkz@gmail.com
+* @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
+*/
+=end
+#Bee
+class Bee
+
+  def initialize window
+    @window, @x, @y = window, 300, 200
+    begin
+      @image = Gosu::Image.new window, 'images/player/bee.png', true
+      @heart = Gosu::Image.new window, 'images/player/heart.png', true
+      @ui = Gosu::Font.new(window, 'Monospace', 25)
+      @lives, @score, @stamina, @angle = 3, 0, 100, 0
+      @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
+    rescue Exception => e
+      puts "#{e.class}: #{e.message}"
+    end
+  end
+
+  attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle
+
+  def draw
+    @image.draw_rot x, y, 3, angle
+    window.draw_line(x - 10, y - 20, green, x - 10 + stamina/4, y - 20, green, 1, mode = :default)
+    window.draw_line(x - 10 + stamina/4, y - 20, red, x + 15, y - 20, red, 1, mode = :default)
+    @heart_x = 0
+    @lives.times do
+      @heart.draw(610 - @heart_x, 10, 5)
+      @heart_x += 24
+    end
+    @ui.draw("Score: #{score}", 10, 10, 5)
+  end
+
+  def movement
+    move_left if window.button_down? Gosu::KbLeft
+    move_right if window.button_down? Gosu::KbRight
+    move_up if window.button_down? Gosu::KbUp
+    move_down if window.button_down? Gosu::KbDown
+    turn_left if window.button_down? Gosu::KbSpace
+    turn_right
+  end
+  
+  def move_left
+    @x -= 7.0 if @x >= 25
+  end
+
+  def move_right
+    @x += 7.0 if @x <= 610
+  end
+
+  def move_up
+    @y -= 7.0 if @y >= 60
+  end
+
+  def move_down
+    @y += 7.0 if @y <= 425
+  end
+
+  def turn_left
+    @angle -= 20
+    @angle = -45 if @angle <= -45
+  end
+
+  def turn_right
+    @angle += 10 if @angle <= 0
+  end
+end
