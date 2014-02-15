@@ -4,6 +4,7 @@
 * @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
 */
 =end
+#Bomb - player's additional weapon class
 class Bomb
 
   def initialize window, x, y
@@ -15,14 +16,17 @@ class Bomb
   attr_reader :window
   attr_accessor :drawing, :x, :y
   
+  #draw
   def draw
     @img.draw @x, @y, 3 if @drawing
   end
 
+  #update
   def update
     move_down if @drawing
   end
 
+  #move down when player bomb
   def move_down
     @y += 7 if @y <= 425
     @drawing = false if @y >= 425

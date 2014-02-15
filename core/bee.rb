@@ -4,11 +4,11 @@
 * @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
 */
 =end
-#Bee
+#Bee - main player class
 class Bee
 
   def initialize window
-    @window, @x, @y = window, 300, 200
+    @window, @x, @y = window, 600, 200
     begin
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true

@@ -4,7 +4,7 @@
 * @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
 */
 =end
-#GameWindow
+#GameWindow - main window class
 class GameWindow < Gosu::Window
 
   include Singleton

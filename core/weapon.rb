@@ -4,7 +4,7 @@
 * @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
 */
 =end
-#Weapon
+#Weapon - player's main weapon class
 class Weapon
 
   def initialize window, x, y

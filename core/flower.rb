@@ -4,7 +4,7 @@
 * @copyright (c) 2014 Zhussupov Zhassulan zhzhussupovkz@gmail.com
 */
 =end
-#Flower
+#Flower - flowers in level
 class Flower
 
   def initialize window, x, y
@@ -31,6 +31,7 @@ class Flower
     end
   end
 
+  #update
   def update
     if @nectar == 0
       @nectar = 0
@@ -43,6 +44,7 @@ class Flower
     end
   end
 
+  #reboot flower when bee drink all nectar
   def reboot
     img = ['blue_flower', 'red_flower', 'white_flower', 'pink_flower'].sample
     @image = Gosu::Image.new window, 'images/flowers/' + img +'.png', true
