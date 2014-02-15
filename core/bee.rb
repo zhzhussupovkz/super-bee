@@ -12,6 +12,7 @@ class Bee
     begin
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true
+      @bomb = Bomb.new window, x - 10, y + 10
       @ui = Gosu::Font.new(window, 'Monospace', 25)
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
@@ -24,6 +25,7 @@ class Bee
 
   def draw
     @image.draw_rot x, y, 3, angle
+    @bomb.draw
     window.draw_line(x - 10, y - 20, green, x - 10 + stamina/4, y - 20, green, 1, mode = :default)
     window.draw_line(x - 10 + stamina/4, y - 20, red, x + 15, y - 20, red, 1, mode = :default)
     @heart_x = 0
@@ -41,12 +43,19 @@ class Bee
     move_down if window.button_down? Gosu::KbDown
     turn_left if window.button_down? Gosu::KbSpace
     turn_right
+    bomber if window.button_down? Gosu::KbLeftControl
+    @bomb.update
+  end
+
+  def bomber
+    @bomb.x, @bomb.y = x - 10, y + 2
+    @bomb.drawing = true
   end
 
   def add_score
     @score += 100
   end
-  
+
   def move_left
     @x -= 7.0 if @x >= 25
   end
@@ -56,7 +65,7 @@ class Bee
   end
 
   def move_up
-    @y -= 7.0 if @y >= 60
+    @y -= 7.0 if @y >= 65
   end
 
   def move_down

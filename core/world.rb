@@ -39,8 +39,8 @@ class World
 
   def collect_nectar
     @flowers.each do |e|
-      if bee.x - e.x <= 30 && bee.x > e.x && (bee.y - e.y).abs <= 15 && e.drawing
-        e.nectar -= 10 if window.button_down? Gosu::KbSpace
+      if bee.x - e.x <= 32 && bee.x - e.x >= 16 && (bee.y - e.y).abs <= 15 && e.drawing
+        e.nectar -= 5 if window.button_down? Gosu::KbSpace
       end
     end
   end
