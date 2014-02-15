@@ -5,6 +5,7 @@ require "singleton"
 
 require_relative "core/bee"
 require_relative "core/bomb"
+require_relative "core/weapon"
 require_relative "core/flower"
 require_relative "core/world"
 require_relative "core/game_window"

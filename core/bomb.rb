@@ -24,7 +24,7 @@ class Bomb
   end
 
   def move_down
-    @y += 10 if @y <= 425
+    @y += 7 if @y <= 425
     @drawing = false if @y >= 425
   end
 end

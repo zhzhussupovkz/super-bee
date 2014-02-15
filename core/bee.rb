@@ -12,6 +12,8 @@ class Bee
     begin
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true
+      @cursor = Gosu::Image.new window, 'images/player/target.png', true
+      @weapon = Weapon.new window, x - 5, y + 12
       @bomb = Bomb.new window, x - 10, y + 10
       @ui = Gosu::Font.new(window, 'Monospace', 25)
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
@@ -24,7 +26,9 @@ class Bee
   attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle
 
   def draw
+    @cursor.draw(window.mouse_x, window.mouse_y, 4)
     @image.draw_rot x, y, 3, angle
+    @weapon.draw
     @bomb.draw
     window.draw_line(x - 10, y - 20, green, x - 10 + stamina/4, y - 20, green, 1, mode = :default)
     window.draw_line(x - 10 + stamina/4, y - 20, red, x + 15, y - 20, red, 1, mode = :default)
@@ -37,14 +41,16 @@ class Bee
   end
 
   def movement
-    move_left if window.button_down? Gosu::KbLeft
-    move_right if window.button_down? Gosu::KbRight
-    move_up if window.button_down? Gosu::KbUp
-    move_down if window.button_down? Gosu::KbDown
+    move_left if window.button_down? Gosu::KbA
+    move_right if window.button_down? Gosu::KbD
+    move_up if window.button_down? Gosu::KbW
+    move_down if window.button_down? Gosu::KbS
     turn_left if window.button_down? Gosu::KbSpace
     turn_right
     bomber if window.button_down? Gosu::KbLeftControl
     @bomb.update
+    @weapon.x, @weapon.y = x - 5, y + 12
+    @weapon.shot if window.button_down? Gosu::MsLeft
   end
 
   def bomber
