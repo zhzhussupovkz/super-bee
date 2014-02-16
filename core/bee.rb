@@ -58,6 +58,25 @@ class Bee
     @bomb.drawing = true
   end
 
+  #add injury when enemies attack
+  def add_injury
+    @stamina -= 4
+    @x += 20.0
+    @y += 15.0
+    if @stamina <= 0
+      @stamina = 0
+      reboot
+    end
+  end
+
+  #reboot player 
+  def reboot
+    sleep(2)
+    @x, @y = 600, 200
+    @lives -= 1
+    @stamina = 100
+  end
+
   def add_score
     @score += 100
   end

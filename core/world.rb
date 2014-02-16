@@ -66,6 +66,8 @@ class World
     @enemies.each do |e|
       if (Gosu::distance(window.mouse_x, window.mouse_y, e.x - 5.0, e.y) <= 10) && (window.button_down? Gosu::MsLeft) && e.drawing
         e.add_injury
+      elsif (e.x - bee.x).abs <= 15.0 && (e.y - bee.y).abs <= 15.0 && e.drawing
+        bee.add_injury
       end
     end
   end

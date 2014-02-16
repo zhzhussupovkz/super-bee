@@ -29,6 +29,8 @@ class EnemyBee
     move_right
     if stamina == 0
       @drawing = false
+      window.world.bee.add_score
+      @stamina = 100
     end
   end
 
