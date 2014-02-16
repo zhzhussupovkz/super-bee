@@ -49,6 +49,7 @@ class World
     @flowers.each do |f| f.update end
     @enemies.each do |e| e.movement end
     collect_nectar
+    kill_enemies
   end
 
   #collecting nectar by player
@@ -59,4 +60,14 @@ class World
       end
     end
   end
+
+  #kill enemies by player
+  def kill_enemies
+    @enemies.each do |e|
+      if (Gosu::distance(window.mouse_x, window.mouse_y, e.x - 5.0, e.y) <= 10) && (window.button_down? Gosu::MsLeft) && e.drawing
+        e.add_injury
+      end
+    end
+  end
+
 end

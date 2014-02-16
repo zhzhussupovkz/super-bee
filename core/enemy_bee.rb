@@ -15,6 +15,7 @@ class EnemyBee
   end
 
   attr_reader :window, :x, :y, :angle, :stamina, :green, :red
+  attr_accessor :drawing
   
   def draw
     if @drawing
@@ -41,6 +42,12 @@ class EnemyBee
     @y = rand(75..425)
     @drawing = true
     @stamina = 100
+  end
+
+  #add injury when player attack
+  def add_injury
+    @stamina -= 10
+    @stamina = 0 if @stamina <= 0
   end
   
 end
