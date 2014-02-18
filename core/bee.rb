@@ -77,8 +77,12 @@ class Bee
     @stamina = 100
   end
 
-  def add_score
+  def add_score_flowers
     @score += 100
+  end
+
+  def add_score_enemies
+    @score += 250
   end
 
   def move_left

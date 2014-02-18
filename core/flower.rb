@@ -37,7 +37,7 @@ class Flower
       @nectar = 0
       @drawing = false
       @last = Time.now.to_i
-      window.world.bee.add_score
+      window.world.bee.add_score_flowers
       @nectar = 100
     elsif Time.now.to_i == @last + 5 && @drawing == false
       reboot
