@@ -18,12 +18,14 @@ class Bee
       @ui = Gosu::Font.new(window, 'Monospace', 25)
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
+      @last_prize = Time.now.to_i
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
 
   attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle
+  attr_accessor :last_prize
 
   def draw
     @cursor.draw(window.mouse_x, window.mouse_y, 4)
@@ -51,6 +53,7 @@ class Bee
     @bomb.update
     @weapon.x, @weapon.y = x - 5, y + 12
     @weapon.shot if window.button_down? Gosu::MsLeft
+    collect_prizes
   end
 
   def bomber
@@ -83,6 +86,19 @@ class Bee
 
   def add_score_enemies
     @score += 250
+  end
+
+  def add_score_prizes
+    @score += 50
+  end
+
+  #collect prizes
+  def collect_prizes
+    if (window.world.prize.x - @x).abs <= 15.0 && (window.world.prize.y - @y).abs <= 15.0 && (window.world.prize.drawing == true)
+      window.world.prize.drawing = false
+      @last_prize = Time.now.to_i
+      add_score_prizes
+    end
   end
 
   def move_left

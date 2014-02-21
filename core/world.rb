@@ -12,12 +12,13 @@ class World
     @bg = Gosu::Image.new window, 'images/world/background.png', true
     @green = Gosu::Image.new window, 'images/world/green.png', true
     @bee = Bee.new window
+    @prize = Prize.new window
     @flowers, @enemies = [], []
     generate_flowers
     generate_enemies
   end
 
-  attr_reader :window, :bee
+  attr_reader :window, :bee, :prize
 
   #generate all flowers
   def generate_flowers
@@ -41,6 +42,7 @@ class World
     @bee.draw
     @flowers.each do |f| f.draw end
     @enemies.each do |e| e.draw end
+    @prize.draw
   end
 
   #update
@@ -48,6 +50,7 @@ class World
     @bee.movement
     @flowers.each do |f| f.update end
     @enemies.each do |e| e.movement end
+    @prize.update
     collect_nectar
     kill_enemies
   end

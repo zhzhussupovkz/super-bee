@@ -18,7 +18,7 @@ class Prize
   end
 
   attr_accessor :drawing
-  attr_reader :x, :y
+  attr_reader :x, :y, :window
   
   #draw
   def draw
@@ -27,7 +27,7 @@ class Prize
 
   #moving
   def move
-    @y += 5
+    @y += 1
     if @y >= 425
       @drawing = false
       @y = 0
@@ -38,6 +38,17 @@ class Prize
   #change to new prize
   def change
     @x, @y = rand(25..575), 50
+    window.world.bee.last_prize = Time.now.to_i
   end
-  
+
+  #update
+  def update
+    move if @drawing
+    curr = window.world.bee.last_prize
+    time = rand(curr + 10..curr + 30)
+    if time == Time.now.to_i
+      @drawing = true
+    end
+  end
+
 end
