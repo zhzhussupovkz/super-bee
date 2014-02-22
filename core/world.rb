@@ -18,7 +18,7 @@ class World
     generate_enemies
   end
 
-  attr_reader :window, :bee, :prize
+  attr_reader :window, :bee, :prize, :flowers, :enemies
 
   #generate all flowers
   def generate_flowers
@@ -51,28 +51,6 @@ class World
     @flowers.each do |f| f.update end
     @enemies.each do |e| e.movement end
     @prize.update
-    collect_nectar
-    kill_enemies
-  end
-
-  #collecting nectar by player
-  def collect_nectar
-    @flowers.each do |e|
-      if bee.x - e.x <= 32 && bee.x - e.x >= 16 && (bee.y - e.y).abs <= 15 && e.drawing
-        e.nectar -= 5 if window.button_down? Gosu::KbSpace
-      end
-    end
-  end
-
-  #kill enemies by player
-  def kill_enemies
-    @enemies.each do |e|
-      if (Gosu::distance(window.mouse_x, window.mouse_y, e.x - 5.0, e.y) <= 10) && (window.button_down? Gosu::MsLeft) && e.drawing
-        e.add_injury
-      elsif (e.x - bee.x).abs <= 15.0 && (e.y - bee.y).abs <= 15.0 && e.drawing
-        bee.add_injury
-      end
-    end
   end
 
 end

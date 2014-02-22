@@ -53,6 +53,8 @@ class Bee
     @bomb.update
     @weapon.x, @weapon.y = x - 5, y + 12
     @weapon.shot if window.button_down? Gosu::MsLeft
+    collect_nectar
+    kill_enemies
     collect_prizes
   end
 
@@ -92,6 +94,26 @@ class Bee
 
   def add_score_prizes
     @score += 50
+  end
+
+  #collecting nectar by player
+  def collect_nectar
+    window.world.flowers.each do |e|
+      if x - e.x <= 32 && x - e.x >= 16 && (y - e.y).abs <= 15 && e.drawing
+        e.nectar -= 5 if window.button_down? Gosu::KbSpace
+      end
+    end
+  end
+
+  #kill enemies by player
+  def kill_enemies
+    window.world.enemies.each do |e|
+      if (Gosu::distance(window.mouse_x, window.mouse_y, e.x - 5.0, e.y) <= 10) && (window.button_down? Gosu::MsLeft) && e.drawing
+        e.add_injury
+      elsif (e.x - x).abs <= 15.0 && (e.y - y).abs <= 15.0 && e.drawing
+        add_injury
+      end
+    end
   end
 
   #collect prizes
