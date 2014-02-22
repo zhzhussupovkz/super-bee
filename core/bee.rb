@@ -92,8 +92,16 @@ class Bee
     @score += 250
   end
 
-  def add_score_prizes
-    @score += 50
+  def add_score_prizes prize
+    case prize.type
+    when 'stamina'
+      @stamina += 10 if @stamina < 100
+      @stamina = 100 if @stamina >= 100
+    when 'live'
+      @lives += 1 if @lives < 3
+    when 'score'
+      @score += 50
+    end
   end
 
   #collecting nectar by player
@@ -121,7 +129,7 @@ class Bee
     if (window.world.prize.x - @x).abs <= 15.0 && (window.world.prize.y - @y).abs <= 15.0 && (window.world.prize.drawing == true)
       window.world.prize.drawing = false
       @last_prize = Time.now.to_i
-      add_score_prizes
+      add_score_prizes window.world.prize
     end
   end
 

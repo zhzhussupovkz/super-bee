@@ -11,6 +11,7 @@ class World
     @window = window
     @bg = Gosu::Image.new window, 'images/world/background.png', true
     @green = Gosu::Image.new window, 'images/world/green.png', true
+    @ui = Gosu::Font.new(window, 'Monospace', 20)
     @bee = Bee.new window
     @prize = Prize.new window
     @flowers, @enemies = [], []
@@ -43,6 +44,8 @@ class World
     @flowers.each do |f| f.draw end
     @enemies.each do |e| e.draw end
     @prize.draw
+    year = (Time.at(Time.now.to_i)).strftime("%Y")
+    @ui.draw("Copyright (c) #{year} by zhzhussupovkz", 175, 460, 4)
   end
 
   #update
