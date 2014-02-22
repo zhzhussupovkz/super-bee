@@ -66,6 +66,8 @@ class Bee
     @stamina -= 4
     @x += 20.0
     @y += 15.0
+    @x = 610 if @x >= 610
+    @y = 425 if @y >= 425
     if @stamina <= 0
       @stamina = 0
       reboot
