@@ -36,7 +36,11 @@ class Weapon
 
   #draw
   def draw
-    @img.draw_rot x, y, 3, angle
+    if !window.world.bee.game_over?
+      @img.draw_rot x, y, 3, angle
+    else
+      @img.draw_rot x, y, 3, 0
+    end
   end
 
   #shot

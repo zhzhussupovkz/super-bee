@@ -13,18 +13,19 @@ class Bee
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true
       @cursor = Gosu::Image.new window, 'images/player/target.png', true
+      @collect = Gosu::Song.new(window, 'sounds/collect.ogg')
       @weapon = Weapon.new window, x - 5, y + 12
       @bomb = Bomb.new window, x - 10, y + 10
       @ui = Gosu::Font.new(window, 'Monospace', 25)
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
-      @last_prize = Time.now.to_i
+      @last_prize, @dead = Time.now.to_i, false
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
 
-  attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle
+  attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle, :dead
   attr_accessor :last_prize
 
   def draw
@@ -40,22 +41,27 @@ class Bee
       @heart_x += 24
     end
     @ui.draw("Score: #{score}", 10, 10, 5)
+    @ui.draw("GAME OVER", 275, 10, 5) if dead
   end
 
   def movement
-    move_left if window.button_down? Gosu::KbA
-    move_right if window.button_down? Gosu::KbD
-    move_up if window.button_down? Gosu::KbW
-    move_down if window.button_down? Gosu::KbS
-    turn_left if window.button_down? Gosu::KbSpace
-    turn_right
-    bomber if window.button_down? Gosu::KbLeftControl
-    @bomb.update
     @weapon.x, @weapon.y = x - 5, y + 12
-    @weapon.shot if window.button_down? Gosu::MsLeft
-    collect_nectar
-    kill_enemies
-    collect_prizes
+    if @lives > 0
+      move_left if window.button_down? Gosu::KbA
+      move_right if window.button_down? Gosu::KbD
+      move_up if window.button_down? Gosu::KbW
+      move_down if window.button_down? Gosu::KbS
+      turn_left if window.button_down? Gosu::KbSpace
+      turn_right
+      bomber if window.button_down? Gosu::KbLeftControl
+      @bomb.update
+      @weapon.shot if window.button_down? Gosu::MsLeft
+      collect_nectar
+      kill_enemies
+      collect_prizes
+    else
+      game_over
+    end
   end
 
   def bomber
@@ -128,8 +134,9 @@ class Bee
   def collect_prizes
     if (window.world.prize.x - @x).abs <= 15.0 && (window.world.prize.y - @y).abs <= 15.0 && (window.world.prize.drawing == true)
       window.world.prize.drawing = false
-      @last_prize = Time.now.to_i
       add_score_prizes window.world.prize
+      @collect.play(looping = false)
+      window.world.prize.change
     end
   end
 
@@ -157,4 +164,15 @@ class Bee
   def turn_right
     @angle += 10 if @angle <= 0
   end
+
+  #game over
+  def game_over
+    @dead = true
+  end
+
+  #game is over
+  def game_over?
+    @dead == true
+  end
+
 end

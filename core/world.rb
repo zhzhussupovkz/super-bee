@@ -51,9 +51,11 @@ class World
   #update
   def update
     @bee.movement
-    @flowers.each do |f| f.update end
-    @enemies.each do |e| e.movement end
-    @prize.update
+    if !@bee.game_over?
+      @flowers.each do |f| f.update end
+      @enemies.each do |e| e.movement end
+      @prize.update
+    end
   end
 
 end
