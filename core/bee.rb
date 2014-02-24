@@ -72,8 +72,14 @@ class Bee
   #add injury when enemies attack
   def add_injury
     @stamina -= 4
+    inert = ['down', 'up'].sample
     @x += 20.0
-    @y += 15.0
+    case inert
+    when 'down'
+      @y += 15.0
+    when 'up'
+      @y -= 15.0
+    end
     @x = 610 if @x >= 610
     @y = 425 if @y >= 425
     if @stamina <= 0
