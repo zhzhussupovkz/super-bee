@@ -10,6 +10,7 @@ require_relative "core/flower"
 require_relative "core/prize"
 require_relative "core/enemy_bee"
 require_relative "core/world"
+require_relative "core/menu"
 require_relative "core/game_window"
 
 GameWindow.instance.show
