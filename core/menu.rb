@@ -13,9 +13,11 @@ class Menu
     @cursor = Gosu::Image.new(@window, 'images/menu/cursor.png')
     @icon = Gosu::Image.new(@window, 'images/menu/bee-menu.png')
     @new = Gosu::Image.new(window, 'images/menu/new.png', true)
+    @controls = Gosu::Image.new(window, 'images/menu/controls.png', true)
     @exit = Gosu::Image.new(window, 'images/menu/exit.png', true)
     @weapon = Gosu::Image.new(window, 'images/menu/ak-menu.png', true)
     @c = Gosu::Font.new(window, 'Monospace', 20)
+    @show_controls = false
   end
 
   attr_accessor :display
@@ -24,13 +26,19 @@ class Menu
     if @display === true
       @bg.draw(0,0,0)
       @icon.draw(275, 100, 1)
-      @new.draw(300, 300, 1)
+      @new.draw(300, 250, 1)
+      @controls.draw(300, 300, 1)
       @exit.draw(300, 350, 1)
       @cursor.draw(@window.mouse_x, @window.mouse_y, 2)
       year = (Time.at(Time.now.to_i)).strftime("%Y")
       @c.draw("Copyright (c) #{year} by zhzhussupovkz", 200, 425, 1)
       @c.draw("Icons by http://findicons.com", 225, 450, 1)
       if 300 < @window.mouse_x &&
+      @window.mouse_x < 396 &&
+      250 < @window.mouse_y &&
+      @window.mouse_y < 282
+        @weapon.draw(400, 250, 1)
+      elsif 300 < @window.mouse_x &&
       @window.mouse_x < 396 &&
       300 < @window.mouse_y &&
       @window.mouse_y < 332
@@ -41,6 +49,14 @@ class Menu
       @window.mouse_y < 382
         @weapon.draw(400, 350, 1)
       end
+      if @show_controls
+        @c.draw("Movement: A,S,D,W", 100, 250, 1)
+        @c.draw("Shot: Mouse Left", 100, 275, 1)
+        @c.draw("Collect nectar: Space", 100, 300, 1)
+        @c.draw("Bomb: Left Ctrl", 100, 325, 1)
+        @c.draw("Pause: P", 100, 350, 1)
+        @c.draw("Exit: Esc", 100, 375, 1)
+      end
     end
   end
 
@@ -48,9 +64,14 @@ class Menu
   def update
     if 300 < @window.mouse_x &&
     @window.mouse_x < 396 &&
+    250 < @window.mouse_y &&
+    @window.mouse_y < 282 && (@window.button_down? Gosu::MsLeft)
+      new_game
+    elsif 300 < @window.mouse_x &&
+    @window.mouse_x < 396 &&
     300 < @window.mouse_y &&
     @window.mouse_y < 332 && (@window.button_down? Gosu::MsLeft)
-      new_game
+      controls
     elsif 300 < @window.mouse_x &&
     @window.mouse_x < 396 &&
     350 < @window.mouse_y &&
@@ -63,6 +84,11 @@ class Menu
   def new_game
     @display = false
     @window.pause = false
+  end
+
+  #show contorls
+  def controls
+    @show_controls = !@show_controls
   end
 
   #exit button click event
