@@ -51,5 +51,10 @@ class EnemyBee
     @stamina -= 10
     @stamina = 0 if @stamina <= 0
   end
+
+  #add injury when player's bomb attack
+  def add_injury_by_bomb
+    @stamina = 0
+  end
   
 end
