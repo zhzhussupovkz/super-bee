@@ -65,7 +65,7 @@ class Bee
   end
 
   def bomber
-    @bomb.x, @bomb.y = x - 10, y + 2
+    @bomb.x, @bomb.y = x - 10, y + 2 if @bomb.drawing == false
     @bomb.drawing = true
   end
 
