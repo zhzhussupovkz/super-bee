@@ -12,6 +12,7 @@ class Bee
     begin
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true
+      @coins = Gosu::Image.new window, 'images/player/coins.png', true
       @cursor = Gosu::Image.new window, 'images/player/target.png', true
       @collect = Gosu::Song.new(window, 'sounds/collect.ogg')
       @weapon = Weapon.new window, x - 5, y + 12
@@ -40,7 +41,8 @@ class Bee
       @heart.draw(610 - @heart_x, 10, 5)
       @heart_x += 24
     end
-    @ui.draw("Score: #{score}", 10, 10, 5)
+    @coins.draw(10, 12, 5)
+    @ui.draw("#{score}", 30, 10, 5)
     @ui.draw("GAME OVER", 275, 10, 5) if dead
   end
 
