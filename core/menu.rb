@@ -11,6 +11,7 @@ class Menu
     @window, @display = window, true
     @bg = Gosu::Image.new window, 'images/world/background.png', true
     @cursor = Gosu::Image.new(@window, 'images/menu/cursor.png')
+    @name = Gosu::Image.new(@window, 'images/menu/name.png')
     @icon = Gosu::Image.new(@window, 'images/menu/bee-menu.png')
     @new = Gosu::Image.new(window, 'images/menu/new.png', true)
     @controls = Gosu::Image.new(window, 'images/menu/controls.png', true)
@@ -25,6 +26,7 @@ class Menu
   def draw
     if @display === true
       @bg.draw(0,0,0)
+      @name.draw(150, 25, 1)
       @icon.draw(275, 100, 1)
       @new.draw(300, 250, 1)
       @controls.draw(300, 300, 1)
