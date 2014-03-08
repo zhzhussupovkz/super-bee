@@ -8,17 +8,21 @@
 class Menu
 
   def initialize window
-    @window, @display = window, true
-    @bg = Gosu::Image.new window, 'images/world/background.png', true
-    @cursor = Gosu::Image.new(@window, 'images/menu/cursor.png')
-    @name = Gosu::Image.new(@window, 'images/menu/name.png')
-    @icon = Gosu::Image.new(@window, 'images/menu/bee-menu.png')
-    @new = Gosu::Image.new(window, 'images/menu/new.png', true)
-    @controls = Gosu::Image.new(window, 'images/menu/controls.png', true)
-    @exit = Gosu::Image.new(window, 'images/menu/exit.png', true)
-    @weapon = Gosu::Image.new(window, 'images/menu/ak-menu.png', true)
-    @c = Gosu::Font.new(window, 'Monospace', 20)
-    @show_controls = false
+    begin
+      @window, @display = window, true
+      @bg = Gosu::Image.new window, 'images/world/background.png', true
+      @cursor = Gosu::Image.new(@window, 'images/menu/cursor.png')
+      @name = Gosu::Image.new(@window, 'images/menu/name.png')
+      @icon = Gosu::Image.new(@window, 'images/menu/bee-menu.png')
+      @new = Gosu::Image.new(window, 'images/menu/new.png', true)
+      @controls = Gosu::Image.new(window, 'images/menu/controls.png', true)
+      @exit = Gosu::Image.new(window, 'images/menu/exit.png', true)
+      @weapon = Gosu::Image.new(window, 'images/menu/ak-menu.png', true)
+      @c = Gosu::Font.new(window, 'Monospace', 20)
+      @show_controls = false
+    rescue Exception => e
+      puts "#{e.class}: #{e.message}"
+    end
   end
 
   attr_accessor :display

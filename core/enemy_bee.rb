@@ -8,11 +8,15 @@
 class EnemyBee
 
   def initialize window, x, y
-    @window, @x, @y = window, x, y
-    @image = Gosu::Image.new window, 'images/player/bee-r.png', true
-    @bombing = Gosu::Song.new(window, 'sounds/bomb.ogg')
-    @stamina, @angle, @drawing = 100, 0, true
-    @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
+    begin
+      @window, @x, @y = window, x, y
+      @image = Gosu::Image.new window, 'images/player/bee-r.png', true
+      @bombing = Gosu::Song.new(window, 'sounds/bomb.ogg')
+      @stamina, @angle, @drawing = 100, 0, true
+      @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
+    rescue Exception => e
+      puts "#{e.class}: #{e.message}"
+    end
   end
 
   attr_reader :window, :x, :y, :angle, :stamina, :green, :red
