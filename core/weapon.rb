@@ -45,7 +45,7 @@ class Weapon
 
   #shot
   def shot
-    @sound.play(looping = false) if window.mouse_x + 50 < x
+    @sound.play(looping = false) if window.mouse_x + 50 < x && window.sound
   end
 
 end

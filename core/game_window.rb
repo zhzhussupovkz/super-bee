@@ -15,14 +15,14 @@ class GameWindow < Gosu::Window
     begin
       @world = World.new self
       @menu = Menu.new self
-      @pause = true
+      @pause, @sound = true, true
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
 
   attr_reader :world
-  attr_accessor :pause
+  attr_accessor :pause, :sound
 
   #draw
   def draw
@@ -43,6 +43,8 @@ class GameWindow < Gosu::Window
       close
     when Gosu::KbP
       @pause = !@pause if @menu.display === false
+    when Gosu::KbBackspace
+      @sound = !@sound if @menu.display === false
     end
   end
 end

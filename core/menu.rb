@@ -56,11 +56,12 @@ class Menu
         @weapon.draw(400, 350, 1)
       end
       if @show_controls
-        @c.draw("Movement: A,S,D,W", 100, 250, 1)
-        @c.draw("Shot: Mouse Left", 100, 275, 1)
-        @c.draw("Collect nectar: Space", 100, 300, 1)
-        @c.draw("Bomb: Left Ctrl", 100, 325, 1)
-        @c.draw("Pause: P", 100, 350, 1)
+        @c.draw("Movement: A,S,D,W", 100, 225, 1)
+        @c.draw("Shot: Mouse Left", 100, 250, 1)
+        @c.draw("Collect nectar: Space", 100, 275, 1)
+        @c.draw("Bomb: Left Ctrl", 100, 300, 1)
+        @c.draw("Pause: P", 100, 325, 1)
+        @c.draw("Sound: Backspace", 100, 350, 1)
         @c.draw("Exit: Esc", 100, 375, 1)
       end
     end

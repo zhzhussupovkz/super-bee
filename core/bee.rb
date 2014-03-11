@@ -145,7 +145,7 @@ class Bee
     if (window.world.prize.x - @x).abs <= 15.0 && (window.world.prize.y - @y).abs <= 15.0 && (window.world.prize.drawing == true)
       window.world.prize.drawing = false
       add_score_prizes window.world.prize
-      @collect.play(looping = false)
+      @collect.play(looping = false) if window.sound
       window.world.prize.change
     end
   end

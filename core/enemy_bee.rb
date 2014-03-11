@@ -60,7 +60,7 @@ class EnemyBee
   #add injury when player's bomb attack
   def add_injury_by_bomb
     @stamina = 0
-    @bombing.play(looping = false)
+    @bombing.play(looping = false) if window.sound
   end
   
 end

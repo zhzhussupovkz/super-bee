@@ -11,6 +11,8 @@ class World
     @window = window
     @bg = Gosu::Image.new window, 'images/world/background.png', true
     @green = Gosu::Image.new window, 'images/world/green.png', true
+    @snd_on = Gosu::Image.new window, 'images/world/snd_on.png', true
+    @snd_off = Gosu::Image.new window, 'images/world/snd_off.png', true
     @ui = Gosu::Font.new(window, 'Monospace', 20)
     @bee = Bee.new window
     @prize = Prize.new window
@@ -40,6 +42,11 @@ class World
   def draw
     @bg.draw 0, 0, 0
     @green.draw 0, 440, 1
+    if window.sound
+      @snd_on.draw 535, 10, 1
+    else
+      @snd_off.draw 535, 10, 1
+    end
     @bee.draw
     @flowers.each do |f| f.draw end
     @enemies.each do |e| e.draw end
