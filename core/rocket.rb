@@ -20,7 +20,7 @@ class Rocket
   end
 
   attr_reader :window
-  attr_accessor :x, :y, :fire
+  attr_accessor :x, :y, :fire, :drawing
 
   #draw
   def draw

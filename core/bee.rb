@@ -61,6 +61,7 @@ class Bee
       collect_nectar
       kill_enemies
       collect_prizes
+      enemies_rocket_attack
     else
       game_over
     end
@@ -87,6 +88,29 @@ class Bee
     if @stamina <= 0
       @stamina = 0
       reboot
+    end
+  end
+
+  #add injury when enemies attack by rocket
+  def add_injury_by_rocket
+    @stamina -= 7
+    @x += 20
+    @x = 610 if @x >= 610
+    @y = 425 if @y >= 425
+    if @stamina <= 0
+      @stamina = 0
+      reboot
+    end
+  end
+
+  #enemies rocket attack
+  def enemies_rocket_attack
+    window.world.enemies.each do |e|
+      if (Gosu::distance(x, y, e.rocket.x - 5.0, e.rocket.y) <= 10) && e.drawing
+        add_injury_by_rocket
+        e.rocket.drawing = false
+        e.rocket.fire = false
+      end
     end
   end
 

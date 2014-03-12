@@ -21,9 +21,9 @@ class EnemyBee
     end
   end
 
-  attr_reader :window, :x, :y, :angle, :stamina, :green, :red
+  attr_reader :window, :x, :y, :angle, :stamina, :green, :red, :rocket
   attr_accessor :drawing, :last_rocket_attack, :with_rocket
-  
+
   def draw
     if @drawing
       @image.draw_rot x, y, 3, angle
