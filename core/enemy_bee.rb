@@ -25,9 +25,9 @@ class EnemyBee
   attr_accessor :drawing, :last_rocket_attack, :with_rocket
 
   def draw
+    @rocket.draw if @rocket.fire == true
     if @drawing
       @image.draw_rot x, y, 3, angle
-      @rocket.draw
       window.draw_line(x - 12, y - 20, green, x - 12 + stamina/4, y - 20, green, 1, mode = :default)
       window.draw_line(x - 12 + stamina/4, y - 20, red, x + 13, y - 20, red, 1, mode = :default)
     end
@@ -72,7 +72,7 @@ class EnemyBee
   def rocket_attack
     @rocket.x, @rocket.y = x - 10, y + 10 if @rocket.fire == false
     curr = @last_rocket_attack
-    time = rand(curr + 3..curr + 7)
+    time = rand(curr + 3..curr + 5)
     if time == Time.now.to_i
       @rocket.fire = true
     end
