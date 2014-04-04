@@ -23,7 +23,7 @@ class Bee
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
       @last_prize, @dead = Time.now.to_i, false
-      @killed_enemies, @ammo = 0, 30
+      @killed_enemies, @ammo = 0, 31
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
@@ -55,6 +55,7 @@ class Bee
 
   def movement
     @weapon.x, @weapon.y = x - 5, y + 12
+    @weapon.update
     if @lives > 0
       move_left if window.button_down? Gosu::KbA
       move_right if window.button_down? Gosu::KbD
@@ -173,9 +174,6 @@ class Bee
     end
     @ammo = 0 if @ammo <= 0
     @ammo = 30 if @ammo >= 30
-    if (window.button_down? Gosu::MsLeft) && @ammo > 0
-      @ammo -= 1
-    end
     if window.button_down? Gosu::KbR
       @ammo = 30
       @reload.play(looping = false)

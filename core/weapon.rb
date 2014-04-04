@@ -13,6 +13,7 @@ class Weapon
       @img = Gosu::Image.new window, "images/player/ak.png", true
       @x, @y, @angle = x, y, 0
       @sound = Gosu::Song.new window, 'sounds/ak.ogg'
+      @last_shot, @fire = Time.now.to_i, true
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
@@ -45,7 +46,18 @@ class Weapon
 
   #shot
   def shot
-    @sound.play(looping = false) if window.mouse_x + 50 < x && window.sound && window.world.bee.ammo > 0
+    if window.mouse_x + 50 < x && window.sound && window.world.bee.ammo > 0 && @fire == true
+      window.world.bee.ammo -= 1
+      @sound.play(looping = false)
+    end
+  end
+
+  #update
+  def update
+    if Time.now.to_i >= @last_shot + 2
+      @fire = true
+      @last_shot = Time.now.to_i
+    end
   end
 
 end
