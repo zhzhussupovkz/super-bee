@@ -13,6 +13,7 @@ class Bee
       @image = Gosu::Image.new window, 'images/player/bee.png', true
       @heart = Gosu::Image.new window, 'images/player/heart.png', true
       @coins = Gosu::Image.new window, 'images/player/coins.png', true
+      @ui_enemy = Gosu::Image.new window, 'images/player/ui_bee.png', true
       @cursor = Gosu::Image.new window, 'images/player/target.png', true
       @collect = Gosu::Song.new(window, 'sounds/collect.ogg')
       @weapon = Weapon.new window, x - 5, y + 12
@@ -21,13 +22,14 @@ class Bee
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
       @last_prize, @dead = Time.now.to_i, false
+      @killed_enemies = 0
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
 
   attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle, :dead
-  attr_accessor :last_prize
+  attr_accessor :last_prize, :killed_enemies
 
   def draw
     @cursor.draw(window.mouse_x, window.mouse_y, 4)
@@ -42,7 +44,9 @@ class Bee
       @heart_x += 24
     end
     @coins.draw(10, 12, 5)
-    @ui.draw("#{score}", 30, 10, 5)
+    @ui_enemy.draw(10, 30, 5)
+    @ui.draw("#{score}", 40, 10, 5)
+    @ui.draw("#{killed_enemies}", 40, 30, 5)
     @ui.draw("GAME OVER", 275, 10, 5) if dead
   end
 
@@ -85,6 +89,7 @@ class Bee
     end
     @x = 610 if @x >= 610
     @y = 425 if @y >= 425
+    @y = 90 if @y <= 90
     if @stamina <= 0
       @stamina = 0
       reboot
@@ -96,7 +101,6 @@ class Bee
     @stamina -= 7
     @x += 20
     @x = 610 if @x >= 610
-    @y = 425 if @y >= 425
     if @stamina <= 0
       @stamina = 0
       reboot
@@ -183,7 +187,7 @@ class Bee
   end
 
   def move_up
-    @y -= 7.0 if @y >= 65
+    @y -= 7.0 if @y >= 90
   end
 
   def move_down

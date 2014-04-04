@@ -33,7 +33,7 @@ class World
   #generate enemies - other bees
   def generate_enemies
     (20..450).step(50) do |i|
-      y_cord = rand(75..425)
+      y_cord = rand(95..425)
       @enemies << EnemyBee.new(window, i, y_cord)
     end
   end

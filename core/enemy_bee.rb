@@ -59,7 +59,10 @@ class EnemyBee
   #add injury when player attack
   def add_injury
     @stamina -= 10
-    @stamina = 0 if @stamina <= 0
+    if @stamina <= 0
+      @stamina = 0
+      window.world.bee.killed_enemies += 1
+    end
   end
 
   #add injury when player's bomb attack
