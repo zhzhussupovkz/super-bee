@@ -19,7 +19,7 @@ class Menu
       @exit = Gosu::Image.new(window, 'images/menu/exit.png', true)
       @weapon = Gosu::Image.new(window, 'images/menu/ak-menu.png', true)
       @c = Gosu::Font.new(window, 'Monospace', 20)
-      @show_controls = false
+      @show_controls, @last_show = false, Time.now.to_i
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
@@ -56,13 +56,14 @@ class Menu
         @weapon.draw(400, 350, 1)
       end
       if @show_controls
-        @c.draw("Movement: A,S,D,W", 100, 225, 1)
-        @c.draw("Shot: Mouse Left", 100, 250, 1)
-        @c.draw("Collect nectar: Space", 100, 275, 1)
-        @c.draw("Bomb: Left Ctrl", 100, 300, 1)
-        @c.draw("Pause: P", 100, 325, 1)
-        @c.draw("Sound: Backspace", 100, 350, 1)
-        @c.draw("Exit: Esc", 100, 375, 1)
+        @c.draw("Movement: A,S,D,W", 100, 210, 1)
+        @c.draw("Shot: Mouse Left", 100, 235, 1)
+        @c.draw("Reload: R", 100, 260, 1)
+        @c.draw("Collect nectar: Space", 100, 285, 1)
+        @c.draw("Bomb: Left Ctrl", 100, 310, 1)
+        @c.draw("Pause: P", 100, 335, 1)
+        @c.draw("Sound: Backspace", 100, 360, 1)
+        @c.draw("Exit: Esc", 100, 385, 1)
       end
     end
   end
@@ -85,6 +86,7 @@ class Menu
     @window.mouse_y < 382 && (@window.button_down? Gosu::MsLeft)
       exit
     end
+    @show_controls = false if Time.now.to_i >= @last_show + 10
   end
 
   #new game button click event
@@ -95,7 +97,8 @@ class Menu
 
   #show contorls
   def controls
-    @show_controls = !@show_controls
+    @last_show = Time.now.to_i
+    @show_controls = true if @show_controls == false
   end
 
   #exit button click event
