@@ -18,7 +18,7 @@ class Weapon
     end
   end
 
-  attr_reader :window
+  attr_reader :window, :img
   attr_accessor :x, :y
 
   #calculate angle
@@ -45,7 +45,7 @@ class Weapon
 
   #shot
   def shot
-    @sound.play(looping = false) if window.mouse_x + 50 < x && window.sound
+    @sound.play(looping = false) if window.mouse_x + 50 < x && window.sound && window.world.bee.ammo > 0
   end
 
 end

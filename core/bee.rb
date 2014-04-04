@@ -16,20 +16,21 @@ class Bee
       @ui_enemy = Gosu::Image.new window, 'images/player/ui_bee.png', true
       @cursor = Gosu::Image.new window, 'images/player/target.png', true
       @collect = Gosu::Song.new(window, 'sounds/collect.ogg')
+      @reload = Gosu::Song.new(window, 'sounds/ak-reload.ogg')
       @weapon = Weapon.new window, x - 5, y + 12
       @bomb = Bomb.new window, x - 10, y + 10
       @ui = Gosu::Font.new(window, 'Monospace', 25)
       @lives, @score, @stamina, @angle = 3, 0, 100, 0
       @green, @red = Gosu::Color.argb(0xff00ff00), Gosu::Color.argb(0xffff0000)
       @last_prize, @dead = Time.now.to_i, false
-      @killed_enemies = 0
+      @killed_enemies, @ammo = 0, 30
     rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
 
   attr_reader :window, :x, :y, :score, :stamina, :green, :red, :angle, :dead
-  attr_accessor :last_prize, :killed_enemies
+  attr_accessor :last_prize, :killed_enemies, :ammo
 
   def draw
     @cursor.draw(window.mouse_x, window.mouse_y, 4)
@@ -45,8 +46,10 @@ class Bee
     end
     @coins.draw(10, 12, 5)
     @ui_enemy.draw(10, 30, 5)
+    @weapon.img.draw(600, 30, 5)
     @ui.draw("#{score}", 40, 10, 5)
     @ui.draw("#{killed_enemies}", 40, 30, 5)
+    @ui.draw("#{ammo}", 575, 34, 5)
     @ui.draw("GAME OVER", 275, 10, 5) if dead
   end
 
@@ -143,6 +146,8 @@ class Bee
       @lives += 1 if @lives < 3
     when 'score'
       @score += 50
+    when 'ammo'
+      @ammo += 30
     end
   end
 
@@ -159,12 +164,21 @@ class Bee
   def kill_enemies
     window.world.enemies.each do |e|
       if (Gosu::distance(window.mouse_x, window.mouse_y, e.x - 5.0, e.y) <= 10) && 
-      (window.button_down? Gosu::MsLeft) && 
+      (window.button_down? Gosu::MsLeft) && @ammo > 0 &&
       window.mouse_x < x && e.drawing
         e.add_injury
       elsif (e.x - x).abs <= 15.0 && (e.y - y).abs <= 15.0 && e.drawing
         add_injury
       end
+    end
+    @ammo = 0 if @ammo <= 0
+    @ammo = 30 if @ammo >= 30
+    if (window.button_down? Gosu::MsLeft) && @ammo > 0
+      @ammo -= 1
+    end
+    if window.button_down? Gosu::KbR
+      @ammo = 30
+      @reload.play(looping = false)
     end
   end
 
