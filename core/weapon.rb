@@ -48,15 +48,16 @@ class Weapon
   def shot
     if window.mouse_x + 50 < x && window.sound && window.world.bee.ammo > 0 && @fire == true
       window.world.bee.ammo -= 1
+      @fire = false
+      @last_shot = Time.now.to_i
       @sound.play(looping = false)
     end
   end
 
   #update
   def update
-    if Time.now.to_i >= @last_shot + 2
+    if Time.now.to_i >= @last_shot + 1
       @fire = true
-      @last_shot = Time.now.to_i
     end
   end
 
